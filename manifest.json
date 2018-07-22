@@ -1,0 +1,35 @@
+{
+  "name": "Validity",
+  "version": "0.1",
+  "description": "Automatically extracts and cross-references facts with ____ to determine truth.",
+  "icons": {
+		"128": "icon.png"
+	},
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["third_party/jquery-1.10.2.min.js"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["main.js"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["jquery.highlight.js"]
+    }
+  ],
+  "permissions": [
+    "https://language.googleapis.com/*"
+  ],
+  "manifest_version": 2,
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_title": "Validity",
+		"default_popup": "popup.html"
+  }
+}
