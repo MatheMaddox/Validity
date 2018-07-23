@@ -21,6 +21,10 @@
     {
       "matches": ["<all_urls>"],
       "js": ["jquery.highlight.js"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["config.js"]
     }
   ],
   "permissions": [
@@ -31,5 +35,8 @@
     "default_icon": "icon.png",
     "default_title": "Validity",
 		"default_popup": "popup.html"
+  },
+  "background": {
+  "scripts": ["config.js"]
   }
 }

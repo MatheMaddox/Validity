@@ -12,18 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-var API_KEY = '';
-
-
 // Don't warn twice for the same draft
 var warned = {};
 
-//var main = function(){
 
 $(document).ready(function() {
 
 
   function analyzeSentiment(request) {
+
     var nlpreq = new XMLHttpRequest(); //Send a request to the server
     nlpreq.open("POST", "https://language.googleapis.com/v1beta1/documents:analyzeSentiment?key=" + API_KEY, true); //Method and link to server
 
@@ -39,10 +36,10 @@ $(document).ready(function() {
         sentiment = parseFloat(response['documentSentiment']['score']); //Turns the number in the response into a real number, not a string
         magnitude = parseFloat(response['documentSentiment']['magnitude']);
 
-        console.log(`Sentiment: ${sentiment} \n Magnitude: ${magnitude}`);
+        //console.log(`Sentiment: ${sentiment} \n Magnitude: ${magnitude}`);
+        console.log('*****{=====LOADING=====}*****');
 
-        if (sentiment >= 0.25 || sentiment <= -0.25) {
-          console.log(`Careful, this sentence is particularly opinionated! ${JSON.stringify(request.document.content)}`);
+        if (sentiment >= 0.5 || sentiment <= -0.5) {
           highLightYellow(request);
         }
       }
@@ -66,6 +63,7 @@ $(document).ready(function() {
         var types = [];
         var metadatas = [];
         var saliences = [];
+        var importantFigures = [];
 
         for (let i = 0; i < Object.keys(response.entities).length; i++) {
           let currentEntity = response.entities[i];
@@ -73,21 +71,22 @@ $(document).ready(function() {
           types.push(currentEntity.type);
           metadatas.push(JSON.stringify(currentEntity.metadata));
           saliences.push(currentEntity.salience);
-          if (currentEntity.salience > 0.5 || currentEntity.salience < -0.5) {
-            console.log(`Particularly Important Entity: ${currentEntity.name} with a score of ${currentEntity.salience}`);
-          }
         }
-        console.log(`Names: ${names}`);
-        console.log(`Types: ${types}`);
-        console.log(`Metadata: ${metadatas}`);
-        console.log(`Salience: ${saliences}`);
+
+        var highNumbers = saliences.sort(function(a, b){return b-a});
+        for (let i = 0; i < 10; i++) {
+          let location = saliences.indexOf(highNumbers[i]);
+          importantFigures.push(names[location]);
+        }
+        keywords = importantFigures.join(' ');
+        console.log(`Important Figures: ${keywords}`);
+
       }
     }
   }
   var article = $('p').text();
   var allMedia = $('article, h1, h2, h3, h4, h5, h6, a, div').text();
   //var articlestag = $('div').text();
-  console.log(`Article: ${article} + ${allMedia}`);
 
   var entityrequest = {
     document: {
@@ -123,7 +122,6 @@ $(document).ready(function() {
   function highLightYellow(request) {
     var words = request.document.content;
     var isolatedWord = words.split(" ")
-
     for (let i = 0; i < isolatedWord.length; i++) {
       var word = words;
       var rgx = new RegExp('\\b('+word+')\\b', 'ig');
@@ -136,4 +134,5 @@ $(document).ready(function() {
       $('.extra').css("background-color", "yellow");
     }
   }
+  console.log('Document Analysis Complete');
 });
