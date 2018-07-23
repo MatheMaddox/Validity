@@ -3,12 +3,12 @@
   "version": "0.1",
   "description": "Automatically extracts and cross-references facts with ____ to determine truth.",
   "icons": {
-		"128": "icon.png"
+		"128": "images/icon.png"
 	},
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["content.js"]
+      "js": ["scripts/content.js"]
     },
     {
       "matches": ["<all_urls>"],
@@ -16,15 +16,19 @@
     },
     {
       "matches": ["<all_urls>"],
-      "js": ["main.js"]
-    },
-    {
-      "matches": ["<all_urls>"],
-      "js": ["jquery.highlight.js"]
+      "js": ["scripts/main.js"]
     },
     {
       "matches": ["<all_urls>"],
       "js": ["config.js"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["scripts/analyze.js"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["scripts/highlight.js"]
     }
   ],
   "permissions": [
@@ -32,7 +36,7 @@
   ],
   "manifest_version": 2,
   "browser_action": {
-    "default_icon": "icon.png",
+    "default_icon": "images/icon.png",
     "default_title": "Validity",
 		"default_popup": "popup.html"
   },
