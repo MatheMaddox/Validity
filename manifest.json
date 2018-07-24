@@ -8,31 +8,12 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["scripts/content.js"]
-    },
-    {
-      "matches": ["<all_urls>"],
-      "js": ["third_party/jquery-1.10.2.min.js"]
-    },
-    {
-      "matches": ["<all_urls>"],
-      "js": ["scripts/main.js"]
-    },
-    {
-      "matches": ["<all_urls>"],
-      "js": ["config.js"]
-    },
-    {
-      "matches": ["<all_urls>"],
-      "js": ["scripts/analyze.js"]
-    },
-    {
-      "matches": ["<all_urls>"],
-      "js": ["scripts/highlight.js"]
+      "js": ["scripts/content.js", "third_party/jquery-3.3.1.min.js", "scripts/main.js", "config.js", "scripts/analyze.js", "scripts/highlight.js"]
     }
   ],
   "permissions": [
-    "https://language.googleapis.com/*"
+    "https://language.googleapis.com/*",
+    "tabs", "<all_urls>"
   ],
   "manifest_version": 2,
   "browser_action": {
@@ -41,6 +22,7 @@
 		"default_popup": "popup.html"
   },
   "background": {
-  "scripts": ["config.js"]
-  }
+  "scripts": ["scripts/popup.js", "config.js", "third_party/jquery-3.3.1.min.js"]
+  },
+  "content_security_policy": "script-src 'self' https://ajax.googleapis.com; object-src 'self'"
 }
